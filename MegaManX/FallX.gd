@@ -5,7 +5,12 @@ func _enter_state():
 	MMX.animationPlayer.seek(0.8)
 		
 func _handle_input():
-	
+	if MMX.is_on_floor():
+		MMX.lastState="Move"
+		MMX.jumpState="Move"
+		MMX.can_dash=true
+		MMX.can_jump=true
+		return "Move"
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -50,10 +55,5 @@ func _handle_input():
 		MMX.FirstParticle.visible=false
 		MMX.FullParticle.emitting=true
 		MMX.FullParticle.visible=true
-	if MMX.is_on_floor():
-		MMX.lastState="Fall"
-		MMX.can_dash=true
-		MMX.can_jump=true
-		return "Move"
 
 

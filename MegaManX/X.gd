@@ -54,6 +54,7 @@ onready var IdleFire=$IdleFire
 onready var RunFire=$RunFire
 onready var JumpFire=$JumpFire
 onready var DashFire=$DashFire
+onready var DashTimer=$DashTimer
 
 func _ready():
 	sprite.scale.x*=-1
@@ -237,3 +238,7 @@ func _on_ShotTimer_timeout():
 
 func _on_AnimationPlayer_animation_finished(_Dash):
 	currentState=States.Idle
+
+
+func _on_DashTimer_timeout():
+	lastState="Move"

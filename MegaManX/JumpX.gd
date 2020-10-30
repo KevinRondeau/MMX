@@ -57,5 +57,5 @@ func _handle_input():
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	
 	if MMX.velocity.y>60:
-		MMX.lastState="Jump"
+		MMX.lastState="Fall"
 		return "Fall"

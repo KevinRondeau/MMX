@@ -3,6 +3,8 @@ extends "res://MegaManX/StateMachineX.gd"
 func _enter_state():
 	pass
 func _handle_input():
+	if !MMX.is_on_floor()&&MMX.lastState=="Move":
+		MMX.lastState="Jump"
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -26,6 +28,16 @@ func _handle_input():
 		MMX.JumpFire.position.x*=-1
 		MMX.DashFire.position.x*=-1
 		MMX.actual_facing=MMX.face_right
+	#Jump
+	if MMX.can_jump&&Input.is_action_just_pressed("Jump"):
+		MMX.velocity.y+=MMX.JUMPFORCE
+		MMX.can_jump=false
+		MMX.lastState="Jump"
+		return "Jump"
+	if Input.is_action_just_pressed("Dash")&&MMX.can_dash&&MMX.is_on_floor():
+		MMX.can_dash=false
+		MMX.lastState="Dash"
+		return "Dash"
 	#Charge
 	if Input.is_action_pressed("Attack"):
 		MMX.charge+=1
@@ -45,23 +57,17 @@ func _handle_input():
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.shootBullet()
+
 	
-	#Jump
-	if MMX.can_jump&&Input.is_action_just_pressed("Jump"):
-		MMX.velocity.y+=MMX.JUMPFORCE
-		MMX.can_jump=false
-		MMX.lastState="Jump"
-		return "Jump"
-	MMX.shoot()
-	
-	if MMX.is_on_floor()&&MMX.animationPlayer.current_animation=="JumpFire":
+	if MMX.is_on_floor()&&MMX.lastState=="Fall":
 		MMX.lastState="Shoot"
+		MMX.jumpState="Move"
 		return "Move"
 	if MMX.input_vector==Vector2.ZERO&&MMX.animationPlayer.current_animation=="RunFire":
 		MMX.shot_ended() 
 		
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
-
+	MMX.shoot()
 	if MMX.velocity.y>60:
 			MMX.lastState="Fall"
 

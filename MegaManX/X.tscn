@@ -41,7 +41,7 @@ radius = 13.2178
 height = 18.2896
 
 [sub_resource type="Animation" id=4]
-length = 0.85
+length = 0.75
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -50,10 +50,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 150, 151, 152, 153, 154, 155, 156, 157 ]
+"values": [ 150, 151, 152, 153, 154, 153, 154, 153, 154, 153, 154, 153, 155, 156, 157 ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -62,7 +62,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.8 ),
+"times": PoolRealArray( 0.7 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [ null ],
@@ -247,6 +247,8 @@ tracks/0/keys = {
 collision_layer = 2
 collision_mask = 9
 script = ExtResource( 2 )
+SPEED = 200
+DASHSPEED = 400
 
 [node name="FirstCharge" type="Particles2D" parent="."]
 position = Vector2( -0.037672, -6.3217 )
@@ -278,7 +280,7 @@ position = Vector2( 0.579559, -7.56808 )
 texture = ExtResource( 1 )
 vframes = 30
 hframes = 15
-frame = 150
+frame = 152
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -298,6 +300,8 @@ anims/SpawnFall = SubResource( 13 )
 [node name="Firing" type="Timer" parent="."]
 
 [node name="ShotTimer" type="Timer" parent="."]
+
+[node name="DashTimer" type="Timer" parent="."]
 
 [node name="JumpFire" type="Position2D" parent="."]
 position = Vector2( -24.0941, -18.9737 )
@@ -339,3 +343,4 @@ script = ExtResource( 12 )
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="Firing" to="." method="_on_Firing_timeout"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_ShotTimer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
