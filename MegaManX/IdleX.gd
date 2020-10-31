@@ -5,6 +5,8 @@ func _ready():
 
 func _enter_state():
 	MMX.animationPlayer.play("Idle")
+	if MMX.is_on_floor():
+		MMX.velocity=Vector2.ZERO
 	
 func _handle_input():
 	MMX.can_dash=true
@@ -58,7 +60,7 @@ func _handle_input():
 		MMX.can_dash=true
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	
-	if MMX.velocity.y>60&&!MMX.is_on_floor():
+	if MMX.velocity.y>100&&!MMX.is_on_floor():
 		MMX.lastState="Fall"
 		MMX.can_jump=false
 		return "Fall"

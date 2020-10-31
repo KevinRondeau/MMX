@@ -5,6 +5,8 @@ func _enter_state():
 	MMX.animationPlayer.play("Run")
 	if MMX.lastState=="Shoot":
 		MMX.animationPlayer.seek(MMX.currentAnimation)
+	if MMX.is_on_floor():
+		MMX.velocity=Vector2.ZERO
 		
 func _handle_input():
 	MMX.can_dash=true
@@ -52,7 +54,7 @@ func _handle_input():
 		MMX.charge=0
 		return "Shoot"
 	#Dash
-	if Input.is_action_just_pressed("Dash")&&MMX.can_dash&&MMX.input_vector!=Vector2.ZERO:
+	if Input.is_action_just_pressed("Dash")&&MMX.can_dash:
 		MMX.can_dash=false
 		MMX.lastState="Dash"
 		return "Dash"
@@ -66,7 +68,7 @@ func _handle_input():
 		MMX.velocity.x=-MMX.SPEED
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	
-	if MMX.velocity.y>60&&!MMX.is_on_floor():
+	if MMX.velocity.y>100&&!MMX.is_on_floor():
 		MMX.lastState="Fall"
 		MMX.can_jump=false
 		return "Fall"

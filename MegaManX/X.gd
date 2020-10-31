@@ -2,9 +2,10 @@ extends KinematicBody2D
 #Physics
 export var SPEED=150
 export var DASHSPEED=300
-export var GRAVITY=20
+export var GRAVITY=40
 export var MAXFALLSPEED=1000
-export var JUMPFORCE=-500
+export var JUMPFORCE=-2000
+
 const FLOOR=Vector2(0,-1)
 #Input&Facing
 var input_vector=Vector2.ZERO
@@ -54,7 +55,6 @@ onready var IdleFire=$IdleFire
 onready var RunFire=$RunFire
 onready var JumpFire=$JumpFire
 onready var DashFire=$DashFire
-onready var DashTimer=$DashTimer
 
 func _ready():
 	sprite.scale.x*=-1
@@ -80,10 +80,9 @@ func _physics_process(_delta):
 		JumpFire.position.x*=-1
 		DashFire.position.x*=-1
 		actual_facing=face_right
-	if !is_on_floor():
-		velocity.y+=GRAVITY
-		if(velocity.y>MAXFALLSPEED):
-			velocity.y=MAXFALLSPEED
+	velocity.y+=GRAVITY
+	if(velocity.y>MAXFALLSPEED):
+		velocity.y=MAXFALLSPEED
 
 
 func change_state(new_state):

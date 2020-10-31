@@ -1,6 +1,8 @@
 extends "res://MegaManX/StateMachineX.gd"
 
 func _enter_state():
+	if MMX.is_on_floor():
+		MMX.velocity=Vector2.ZERO
 	pass
 func _handle_input():
 	#GetInput
@@ -66,6 +68,6 @@ func _handle_input():
 		
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	MMX.shoot()
-	if MMX.velocity.y>60&&!MMX.is_on_floor():
+	if MMX.velocity.y>100&&!MMX.is_on_floor()&&MMX.lastState!="Dash":
 			MMX.lastState="Fall"
 

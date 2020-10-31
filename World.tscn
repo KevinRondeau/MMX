@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://MegaManX/FloorTest.tscn" type="PackedScene" id=1]
+[ext_resource path="res://FloorTest.tscn" type="PackedScene" id=1]
 [ext_resource path="res://MegaManX/X.tscn" type="PackedScene" id=3]
 
 [node name="World" type="Node2D"]
@@ -36,3 +36,10 @@ position = Vector2( -0.666664, 1.33333 )
 offset = Vector2( 150, 0 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
+
+[node name="FloorTest6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1581.49, 915.688 )
+rotation = 0.261799
+
+[node name="FloorTest7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 2097.83, 985.033 )

@@ -5,6 +5,10 @@ func _enter_state():
 	MMX.animationPlayer.play("Jump")
 	if MMX.lastState=="Shoot":
 		MMX.animationPlayer.seek(MMX.currentAnimation)
+	if MMX.lastState=="Dash":
+		MMX.velocity.y=0
+		MMX.velocity.y+=MMX.JUMPFORCE
+	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 		
 func _handle_input():
 	#GetInput
@@ -56,6 +60,6 @@ func _handle_input():
 	
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	
-	if MMX.velocity.y>60:
+	if MMX.velocity.y>100:
 		MMX.lastState="Fall"
 		return "Fall"
