@@ -43,16 +43,16 @@ func _handle_input():
 	#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Move"
-		MMX.shootBullet()
+		MMX.fire()
 		MMX.charge=0
 		return "Shoot"
 	if Input.is_action_just_pressed("Attack")&&Input.is_action_just_pressed("Jump")&&MMX.can_shoot:
 		MMX.lastState="Jump"
-		MMX.shootBullet()
+		MMX.fire()
 		MMX.charge=0
 		return "Shoot"
 	#Dash
-	if Input.is_action_just_pressed("Dash")&&MMX.can_dash:
+	if Input.is_action_just_pressed("Dash")&&MMX.can_dash&&MMX.input_vector!=Vector2.ZERO:
 		MMX.can_dash=false
 		MMX.lastState="Dash"
 		return "Dash"

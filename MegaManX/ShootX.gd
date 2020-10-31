@@ -3,8 +3,6 @@ extends "res://MegaManX/StateMachineX.gd"
 func _enter_state():
 	pass
 func _handle_input():
-	if !MMX.is_on_floor()&&MMX.lastState=="Move":
-		MMX.lastState="Jump"
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -56,7 +54,7 @@ func _handle_input():
 		MMX.fire()
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
-		MMX.shootBullet()
+		MMX.fire()
 
 	
 	if MMX.is_on_floor()&&MMX.lastState=="Fall":
@@ -68,6 +66,6 @@ func _handle_input():
 		
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	MMX.shoot()
-	if MMX.velocity.y>60:
+	if MMX.velocity.y>60&&!MMX.is_on_floor():
 			MMX.lastState="Fall"
 

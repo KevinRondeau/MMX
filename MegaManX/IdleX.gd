@@ -32,7 +32,7 @@ func _handle_input():
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Idle"
-		MMX.shootBullet()
+		MMX.fire()
 		MMX.charge=0
 		return "Shoot"
 	#Charge
@@ -58,5 +58,9 @@ func _handle_input():
 		MMX.can_dash=true
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	
+	if MMX.velocity.y>60&&!MMX.is_on_floor():
+		MMX.lastState="Fall"
+		MMX.can_jump=false
+		return "Fall"
 	if MMX.is_on_floor():
 		MMX.can_jump=true

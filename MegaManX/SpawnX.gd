@@ -6,8 +6,6 @@ func _ready():
 func _enter_state():
 	pass
 	
-
-	
 func _handle_input():
 	if !MMX.is_on_floor():
 		MMX.animationPlayer.play("SpawnFall")

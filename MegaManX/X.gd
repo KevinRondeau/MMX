@@ -80,9 +80,10 @@ func _physics_process(_delta):
 		JumpFire.position.x*=-1
 		DashFire.position.x*=-1
 		actual_facing=face_right
-	velocity.y+=GRAVITY
-	if(velocity.y>MAXFALLSPEED):
-		velocity.y=MAXFALLSPEED
+	if !is_on_floor():
+		velocity.y+=GRAVITY
+		if(velocity.y>MAXFALLSPEED):
+			velocity.y=MAXFALLSPEED
 
 
 func change_state(new_state):
@@ -90,34 +91,21 @@ func change_state(new_state):
 	
 
 func fire():
-	$ShotTimer.start(0.5)
-	$FirstCharge.emitting=false
-	$FirstCharge.visible=false
-	$MaxCharge.emitting=false
-	$MaxCharge.visible=false
-	can_shoot=false
-	fireTimer.start(0.4)
-	if charge>50&&charge<150:
-		bullet=FIRSTCHARGE.instance()
-	if charge>144:
-		bullet=MAXCHARGE.instance()
-	if face_right==true:
-		bullet.set_direction(1)
-	else:
-		bullet.set_direction(-1)
-	bulletPosition()
-	get_parent().add_child(bullet)
-	charge=0
-
-func shootBullet():
-	$ShotTimer.start(0.1)
 	$FirstCharge.emitting=false
 	$FirstCharge.visible=false
 	$MaxCharge.emitting=false
 	$MaxCharge.visible=false
 	can_shoot=false
 	fireTimer.start(0.3)
-	bullet=BULLET.instance()
+	if charge<50:
+		$ShotTimer.start(0.1)
+		bullet=BULLET.instance()
+	if charge>=50&&charge<150:
+		$ShotTimer.start(0.5)
+		bullet=FIRSTCHARGE.instance()
+	if charge>=144:
+		$ShotTimer.start(0.5)
+		bullet=MAXCHARGE.instance()
 	if face_right==true:
 		bullet.set_direction(1)
 	else:
@@ -237,8 +225,6 @@ func _on_ShotTimer_timeout():
 	can_shoot=true
 
 func _on_AnimationPlayer_animation_finished(_Dash):
+	can_dash=true
 	currentState=States.Idle
-
-
-func _on_DashTimer_timeout():
-	lastState="Move"
+	lastState="Idle"

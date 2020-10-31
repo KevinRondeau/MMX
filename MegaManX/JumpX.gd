@@ -33,7 +33,7 @@ func _handle_input():
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Jump"
-		MMX.shootBullet()
+		MMX.fire()
 		MMX.charge=0
 		return "Shoot"
 		
