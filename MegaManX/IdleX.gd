@@ -11,7 +11,7 @@ func _enter_state():
 func _handle_input():
 	MMX.can_dash=true
 	MMX.animationPlayer.play("Idle")
-	MMX.velocity.x=0
+	MMX.velocity=Vector2.ZERO
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")

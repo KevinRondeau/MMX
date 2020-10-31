@@ -31,15 +31,6 @@ onready var States={
 	"Shoot": $StateMachineX/ShootX,
 	"Dead" : $StateMachineX/DeadX
 }
-enum{
-	IDLE,
-	SPAWN,
-	MOVE,
-	JUMP,
-	FALL,
-	DASH,
-	FIRE
-}
 #OnReady Var
 onready var animationPlayer=$AnimationPlayer
 onready var fireTimer=$Firing
@@ -147,48 +138,7 @@ func shoot():
 		"Dash":
 			animationPlayer.play("DashFire")
 			animationPlayer.seek(currentAnimation)
-
-func move():
-	currentAnimation=animationPlayer.current_animation_position
-	#input(Left/Right)
-	if input_vector.x>0:
-		face_right=true
-		if currentState=="Move"||currentState=="Shoot":
-			velocity.x=SPEED
-	elif input_vector.x<0:
-		face_right=false
-		if currentState=="Move"||currentState=="Shoot":
-			velocity.x=-SPEED
-
-func idle():
-	velocity.x=0
-
-func jump():
-	can_jump=false
-	if input_vector.x>0:
-		face_right=true
-		if jumpState==MOVE:
-			velocity.x=SPEED
-		if jumpState==DASH:
-			velocity.x=DASHSPEED
-	elif input_vector.x<0:
-		face_right=false
-		if jumpState==MOVE:
-			velocity.x=-SPEED
-		if jumpState==DASH:
-			velocity.x=-DASHSPEED
-	if input_vector!=Vector2.ZERO&&jumpState!=DASH:
-		jumpState=MOVE
-
-func dash():
-	if actual_facing==true:
-		velocity.x=DASHSPEED
-	else:
-		velocity.x=-DASHSPEED
-	if Input.is_action_just_released("Dash"):
-		currentState="Move"
-	lastState=DASH
-
+			
 func _Spawned():
 	currentState=States.Idle
 	can_shoot=true

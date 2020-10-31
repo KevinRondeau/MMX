@@ -5,6 +5,8 @@ func _enter_state():
 		MMX.velocity=Vector2.ZERO
 	pass
 func _handle_input():
+	if MMX.lastState=="Idle":
+		MMX.velocity.y=0
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -52,13 +54,7 @@ func _handle_input():
 		MMX.FirstParticle.visible=false
 		MMX.FullParticle.emitting=true
 		MMX.FullParticle.visible=true
-	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
-		MMX.fire()
-		#NormalShot
-	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
-		MMX.fire()
 
-	
 	if MMX.is_on_floor()&&MMX.lastState=="Fall":
 		MMX.lastState="Shoot"
 		MMX.jumpState="Move"
@@ -70,4 +66,9 @@ func _handle_input():
 	MMX.shoot()
 	if MMX.velocity.y>100&&!MMX.is_on_floor()&&MMX.lastState!="Dash":
 			MMX.lastState="Fall"
+	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
+		MMX.fire()
+		#NormalShot
+	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
+		MMX.fire()
 
