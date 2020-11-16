@@ -43,15 +43,31 @@ func _handle_input():
 		MMX.FirstParticle.visible=false
 		MMX.FullParticle.emitting=true
 		MMX.FullParticle.visible=true
+		
+	if Input.is_action_just_pressed("Jump")&&Input.is_action_pressed("Dash"):
+		if MMX.face_right==true:
+			MMX.velocity.x=-MMX.SPEED*2.0
+			MMX.velocity.y=MMX.JUMPFORCE
+			MMX.jumpState="Dash"
+			MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
+			return "WallKick"
+		if MMX.face_right==false:
+			MMX.velocity.x=MMX.SPEED*2.0
+			MMX.velocity.y=MMX.JUMPFORCE
+			MMX.jumpState="Dash"
+			MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
+			return "WallKick"
 	if Input.is_action_just_pressed("Jump"):
 		if MMX.face_right==true:
 			MMX.velocity.x=-MMX.SPEED*1.5
 			MMX.velocity.y=MMX.JUMPFORCE
+			MMX.jumpState="Move"
 			MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 			return "WallKick"
 		if MMX.face_right==false:
 			MMX.velocity.x=MMX.SPEED*1.5
 			MMX.velocity.y=MMX.JUMPFORCE
+			MMX.jumpState="Move"
 			MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 			return "WallKick"
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
