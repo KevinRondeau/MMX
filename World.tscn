@@ -12,7 +12,7 @@ position = Vector2( -208.157, 937.565 )
 [node name="BackGround" type="Sprite" parent="."]
 
 [node name="FloorTest2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 376.835, 896.842 )
+position = Vector2( 253.363, 896.842 )
 scale = Vector2( 1, 1 )
 
 [node name="FloorTest" parent="." instance=ExtResource( 1 )]
@@ -20,15 +20,14 @@ position = Vector2( 173.72, 897.087 )
 scale = Vector2( 1, 1 )
 
 [node name="FloorTest3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1075.82, 849.437 )
+position = Vector2( 1136.3, 902.354 )
 
 [node name="FloorTest4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 582.226, 896.715 )
+position = Vector2( 482.692, 896.715 )
 scale = Vector2( 1, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 148.331, 47.6071 )
-scale = Vector2( 1.5, 1.5 )
 JUMPFORCE = -600
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -38,8 +37,20 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 
 [node name="FloorTest6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1581.49, 915.688 )
+position = Vector2( 1616.77, 971.125 )
 rotation = 0.261799
 
 [node name="FloorTest7" parent="." instance=ExtResource( 1 )]
-position = Vector2( 2097.83, 985.033 )
+position = Vector2( 2121.77, 1041.73 )
+
+[node name="FloorTest9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 961.307, 1207.36 )
+rotation = -1.5708
+
+[node name="FloorTest10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 490.313, 1171.32 )
+rotation = 1.5708
+scale = Vector2( 1.72628, 2.01872 )
+
+[node name="FloorTest8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 726.666, 1457.21 )

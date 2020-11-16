@@ -5,6 +5,10 @@ func _enter_state():
 		MMX.velocity=Vector2.ZERO
 	pass
 func _handle_input():
+	if MMX.animationPlayer.get_current_animation_position()>0.7&&MMX.animationPlayer.get_current_animation()=="DashFire":
+		MMX.can_dash=true
+		MMX.lastState="Idle"
+		return "Idle"
 	if MMX.lastState=="Idle":
 		MMX.velocity.y=0
 	#GetInput
@@ -13,23 +17,20 @@ func _handle_input():
 	#input(Left/Right)
 	if MMX.input_vector.x>0:
 		MMX.face_right=true
+	elif MMX.input_vector.x<0:
+		MMX.face_right=false
+	if MMX.face_right==true&&MMX.lastState!="Idle":
 		if MMX.lastState=="Move"||MMX.jumpState=="Move":
 			MMX.velocity.x=MMX.SPEED
 		if MMX.lastState=="Dash"||MMX.jumpState=="Dash":
 			MMX.velocity.x=MMX.DASHSPEED
-	elif MMX.input_vector.x<0:
-		MMX.face_right=false
+	if MMX.face_right==false&&MMX.lastState!="Idle":
 		if MMX.lastState=="Move"||MMX.jumpState=="Move":
 			MMX.velocity.x=-MMX.SPEED
 		if MMX.lastState=="Dash"||MMX.jumpState=="Dash":
 			MMX.velocity.x=-MMX.DASHSPEED
-	if MMX.face_right!=MMX.actual_facing:
-		MMX.sprite.scale.x*=-1
-		MMX.IdleFire.position.x*=-1
-		MMX.RunFire.position.x*=-1
-		MMX.JumpFire.position.x*=-1
-		MMX.DashFire.position.x*=-1
-		MMX.actual_facing=MMX.face_right
+	if MMX.input_vector==Vector2.ZERO&&MMX.lastState!="Dash":
+		MMX.velocity.x=0
 	#Jump
 	if MMX.can_jump&&Input.is_action_just_pressed("Jump"):
 		MMX.velocity.y+=MMX.JUMPFORCE
@@ -56,7 +57,7 @@ func _handle_input():
 		MMX.FullParticle.visible=true
 
 	if MMX.is_on_floor()&&MMX.lastState=="Fall":
-		MMX.lastState="Shoot"
+		MMX.lastState="Move"
 		MMX.jumpState="Move"
 		return "Move"
 	if MMX.input_vector==Vector2.ZERO&&MMX.animationPlayer.current_animation=="RunFire":
@@ -66,7 +67,10 @@ func _handle_input():
 	MMX.shoot()
 	if MMX.velocity.y>100&&!MMX.is_on_floor()&&MMX.lastState!="Dash":
 			MMX.lastState="Fall"
+			return "Fall"
 	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
+		if MMX.lastState=="Idle":
+			MMX.animationPlayer.seek(0.0)
 		MMX.fire()
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:

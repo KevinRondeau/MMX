@@ -58,7 +58,6 @@ func _handle_input():
 		MMX.can_dash=false
 		MMX.lastState="Dash"
 		return "Dash"
-	MMX.animationPlayer.play("Run")
 	#input(Left/Right)
 	if MMX.input_vector.x>0:
 		MMX.face_right=true

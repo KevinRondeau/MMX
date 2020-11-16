@@ -59,7 +59,9 @@ func _handle_input():
 		MMX.jumpState="Move"
 	
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
-	
+	if MMX.is_on_wall()&&MMX.input_vector.x!=0:
+		MMX.velocity.x=MMX.velocity.x/20
+		return "WallGrab"
 	if MMX.velocity.y>100:
 		MMX.lastState="Fall"
 		return "Fall"

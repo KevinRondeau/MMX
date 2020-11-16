@@ -29,6 +29,8 @@ onready var States={
 	"Jump" : $StateMachineX/JumpX,
 	"Fall" : $StateMachineX/FallX,
 	"Shoot": $StateMachineX/ShootX,
+	"WallGrab" : $StateMachineX/WallGrabX,
+	"WallKick": $StateMachineX/WallKickX,
 	"Dead" : $StateMachineX/DeadX
 }
 #OnReady Var
@@ -46,6 +48,7 @@ onready var IdleFire=$IdleFire
 onready var RunFire=$RunFire
 onready var JumpFire=$JumpFire
 onready var DashFire=$DashFire
+onready var Kicktimer=$KickTimer
 
 func _ready():
 	sprite.scale.x*=-1
@@ -71,9 +74,15 @@ func _physics_process(_delta):
 		JumpFire.position.x*=-1
 		DashFire.position.x*=-1
 		actual_facing=face_right
-	velocity.y+=GRAVITY
-	if(velocity.y>MAXFALLSPEED):
-		velocity.y=MAXFALLSPEED
+	print (update_state)
+	if currentState==States.WallGrab:
+		velocity.y+=GRAVITY
+		if(velocity.y>MAXFALLSPEED/4):
+			velocity.y=MAXFALLSPEED/4
+	else:
+		velocity.y+=GRAVITY
+		if(velocity.y>MAXFALLSPEED):
+			velocity.y=MAXFALLSPEED
 
 
 func change_state(new_state):
@@ -122,8 +131,7 @@ func shoot():
 	match lastState:
 		"Idle":
 			animationPlayer.play("IdleFire")
-			if charge==0:
-				animationPlayer.seek(0)
+			animationPlayer.seek(0)
 			if input_vector!=Vector2.ZERO:
 				shot_ended()
 		"Move":
@@ -141,6 +149,7 @@ func shoot():
 			
 func _Spawned():
 	currentState=States.Idle
+	currentState._enter_state()
 	can_shoot=true
 	can_jump=true
 
@@ -150,22 +159,27 @@ func shot_ended():
 		"Idle":
 			animationPlayer.play("Idle")
 			currentState=States.Idle
+			currentState._enter_state()
 		"Move":
 			animationPlayer.play("Run")
 			animationPlayer.seek(currentAnimation)
 			currentState=States.Move
+			currentState._enter_state()
 		"Jump":
 			animationPlayer.play("Jump")
 			animationPlayer.seek(currentAnimation)
 			currentState=States.Jump
+			currentState._enter_state()
 		"Fall":
 			animationPlayer.play("Jump")
 			animationPlayer.seek(0.8)
 			currentState=States.Fall
+			currentState._enter_state()
 		"Dash":
 			animationPlayer.play("Dash")
 			animationPlayer.seek(currentAnimation)
 			currentState=States.Dash
+			currentState._enter_state()
 		
 func _on_Firing_timeout():
 	shot_ended()
@@ -173,7 +187,6 @@ func _on_Firing_timeout():
 func _on_ShotTimer_timeout():
 	can_shoot=true
 
-func _on_AnimationPlayer_animation_finished(_Dash):
-	can_dash=true
-	currentState=States.Idle
-	lastState="Idle"
+
+func _on_KickTimer_timeout():
+	currentState=States.Fall

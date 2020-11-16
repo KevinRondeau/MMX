@@ -10,7 +10,6 @@ func _enter_state():
 	
 func _handle_input():
 	MMX.can_dash=true
-	MMX.animationPlayer.play("Idle")
 	MMX.velocity=Vector2.ZERO
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
